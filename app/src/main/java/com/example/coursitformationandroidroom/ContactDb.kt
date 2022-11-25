@@ -6,20 +6,19 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-@Database(entities = [(Contact::class)], version = 2)
+@Database(entities = [(Contact::class)], version = 2, exportSchema = false)
 abstract class ContactDb : RoomDatabase() {
 
     abstract fun contactDao(): ContactDao
 
     companion object {
-        var instance: ContactDb? = null
+        private var instance: ContactDb? = null
         fun getInstance(context: Context): ContactDb {
             if (instance == null) {
                 instance = Room.databaseBuilder(
                     context.applicationContext, ContactDb::class.java,
                     "contactsDb"
                 )
-                    .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
                     .build()
             }

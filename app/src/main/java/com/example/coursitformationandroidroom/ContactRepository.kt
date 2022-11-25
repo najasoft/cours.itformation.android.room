@@ -1,10 +1,25 @@
 package com.example.coursitformationandroidroom
 
-import android.content.Context
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
-class ContactRepository(context: Context) {
+class ContactRepository {
 
-    private val contactDao = ContactDb.getInstance(context).contactDao()
-    fun getContacts(): List<Contact> = contactDao.getContacts()
-    fun addContact(c: Contact): Long = contactDao.addContact(c)
+    // Portée des coroutines
+  private  val coroutineScope = CoroutineScope(Dispatchers.Main)
+    private val contactDao =
+        ContactDb.getInstance(ContactApplication.getContext()).contactDao()
+
+
+    fun getContacts(): Flow<List<Contact>> = contactDao.getContacts()
+    suspend fun addContact(c: Contact) =
+        coroutineScope.launch(Dispatchers.IO) { contactDao.addContact(c) }
+
+    suspend fun delContact(c: Contact) =
+        coroutineScope.launch(Dispatchers.IO) { contactDao.delContact(c) }
+
+    suspend fun updateContact(c: Contact) =
+        coroutineScope.launch(Dispatchers.IO) { contactDao.updateContact(c) }
 }

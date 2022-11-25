@@ -17,19 +17,12 @@ import androidx.compose.ui.unit.sp
 import com.example.coursitformationandroidroom.ui.theme.CoursitformationandroidroomTheme
 
 class MainActivity : ComponentActivity() {
-     lateinit var repContacts:ContactRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        repContacts = ContactRepository(this.applicationContext)
-        if (repContacts.getContacts().size < 1)
-        {
-            repContacts.addContact(Contact(nom="Contact 1"))
-            repContacts.addContact(Contact(nom="Contact 2"))
-            repContacts.addContact(Contact(nom="Contact 3"))
-            repContacts.addContact(Contact(nom="Contact 4"))
-            repContacts.addContact(Contact(nom="Contact 5"))
 
-        }
+
+
         setContent {
             CoursitformationandroidroomTheme {
                 // A surface container using the 'background' color from the theme
@@ -37,25 +30,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting(repContacts.getContacts())
+
+                    EcranContacts()
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(liste:List<Contact>) {
-    LazyColumn{
-    //Entête de la liste
-    item(){
-    Text(text = "Liste des contacts", fontSize = 24.sp) }
-        // Liste des contacts
-        items(liste) {
-            elt -> Row{
-                Text(elt.nom)
-        }
-        }
-    }
-}
 
