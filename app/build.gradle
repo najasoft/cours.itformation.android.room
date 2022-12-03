@@ -47,6 +47,7 @@ android {
         }
         buildToolsVersion '33.0.0'
     }
+    }
 
     dependencies {
         def room_version='2.4.3'
